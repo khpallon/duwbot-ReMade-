@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@twurple/api": "^7.0.2",
+    "@twurple/auth": "^7.0.2",
+    "@twurple/easy-bot": "^7.0.2",
+    "@twurple/eventsub-ws": "^7.0.2"
+  }
+}
