@@ -2,13 +2,37 @@
 import { Bot, createBotCommand } from '@twurple/easy-bot'; */
 
 const { StaticAuthProvider } = require('@twurple/auth')
+const { RefreshingAuthProvider } = require('@twurple/auth'); 
 const { Bot, createBotCommand } = require('@twurple/easy-bot')
 const { ApiClient } = require('@twurple/api')
+const { fsPromises } = require('fs').promises;
+
 
 
 const clientId = 'v7hg69jjwt25b70af1j1svqaenk5cl';
-const accessToken = 'oy4r8lqpz8993zf72469as3og3vnb7';
-const authProvider = new StaticAuthProvider(clientId, accessToken);
+const clientSecret = 'lz368k0k5jjalnyeqgmm73yi7jp2us';
+
+const tokenData = async() => {
+	JSON.parse(await fs.readFile('./tokens.125328655.json', 'UTF-8'));
+}
+const authProvider = new RefreshingAuthProvider(
+	{
+		clientId,
+		clientSecret
+	}
+);
+
+// 134728614
+
+authProvider.onRefresh(async (userId, newTokenData) => await fs.writeFile(`./tokens.${userId}.json`, JSON.stringify(newTokenData, null, 4), 'UTF-8'));
+
+async () => {
+	await authProvider.addUserForToken(tokenData, ['chat']);
+}
+
+/* const accessToken = 'x8k08p4fp8960kp72gynkkyl515e2d';
+const refreshToken = '9qk8f3ybbr9c7ne3djj21xikxv6vdnc95jmsv0hiwl4x22br2u';
+const authProvider = new StaticAuthProvider(clientId, accessToken); */
 
 const api = new ApiClient({ authProvider });
 
@@ -55,7 +79,7 @@ async function cat(game){
 }
 
 dog('26490481')
-cat('summit1g')
+cat('duwinz')
 
 /* async function please() {
     const rewards = await api.chat.getChannelBadges('duwinz');
